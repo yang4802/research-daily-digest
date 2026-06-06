@@ -102,6 +102,44 @@ Append today's paper + concepts to `read-log.md`; add new concepts to `mastery.m
 to B. Then present the pick, links, and nudge the user to attempt the challenges —
 **do not answer them**.
 
+### 10. Google Drive mirror  (if `google_drive.enabled`)
+Mirror the daily output to the configured Drive folder:
+```
+python scripts/drive_sync.py --date <YYMMDD>
+```
+If `google_drive.local_sync_root` or env `GOOGLE_DRIVE_DAILY_DIGEST_ROOT` points to
+a Google Drive for desktop synced folder, the script copies `report/<YYMMDD>/`,
+`Papers_Summary.xlsx`, `index.md`, and `research_profile/*.md` there using the same
+relative structure. If no local sync path is configured, it creates a zip bundle and
+`drive_upload_manifest.json` in `report/<YYMMDD>/` and reports that Drive upload still
+needs an upload-capable connector or Drive desktop sync path.
+
+### 11. Create a paper-study thread  (if `learning_thread.enabled`)
+After recommending/selecting the paper and producing the daily context, create a
+separate learning conversation for that exact paper. Prefer a same-directory fork
+so the new thread can read the local report/PDF/text files:
+1. Use the thread tool `fork_thread` with `environment: {type: "same-directory"}`.
+2. Send the new thread a paper-specific tutoring prompt containing:
+   - paper title, arnumber, DOI, and why it was selected;
+   - links/paths to `README.md`, `review_KR.md`, `review_EN.md`, the main PDF, and
+     extracted fulltext;
+   - key concepts and the withheld challenge/self-check list;
+   - instruction to tutor in `report.dialogue_language`, ask mechanism questions
+     first, and withhold challenge answers until the user attempts them.
+   - strict grounding rule: if any factual, numerical, equation, figure/table,
+     citation, author, method, result, limitation, or terminology detail is
+     uncertain or not already grounded in the supplied review/README, the tutor
+     must first read the local PDF/fulltext file before answering. It should say
+     "논문에서 확인해볼게" before checking, and clearly separate verified paper
+     facts from inference or teaching intuition. If the main paper still does
+     not settle the question, the tutor must inspect the relevant cited reference
+     from `report/<YYMMDD>/refs/` when available, or search/download/read the
+     reference directly with the normal IEEE/arXiv workflow before judging. If
+     the claim remains unverifiable, it must say that plainly and leave the
+     point unknown instead of guessing from memory.
+3. Rename the thread as `<learning_thread.title_prefix>: <short paper title>`.
+4. Return the new thread id/link to the user.
+
 ## Scheduling (unattended)
 Run this routine daily (cron / Task Scheduler invoking your Codex agent). The
 dedicated-profile browser must be reachable (launch_browser.py reuses it). The only

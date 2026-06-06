@@ -75,3 +75,37 @@ browser:
   profile_dir: "~/cdp-profile"  # 전용 Chrome/Edge 프로필(로그인·쿠키 영속). OS별 경로 자동 확장.
   # chrome/edge 실행파일은 OS별로 자동 탐지(Windows 우선). 필요시 아래로 직접 지정:
   # executable: "C:/Program Files/Google/Chrome/Application/chrome.exe"
+
+google_drive:
+  enabled: false
+  folder_url: ""
+  folder_id: ""
+  # Local Google Drive for desktop sync folder. Leave blank unless configured.
+  local_sync_root: ""
+  include_excel: true
+
+learning_thread:
+  enabled: true
+  mode: "same_directory_fork"
+  title_prefix: "Paper study"
+  include_files:
+    - "report/<YYMMDD>/README.md"
+    - "report/<YYMMDD>/main/review_KR.md"
+    - "report/<YYMMDD>/main/review_EN.md"
+    - "report/<YYMMDD>/main/<paper>_fulltext.txt"
+  tutor_rule: >
+    Start from the paper-specific context, quiz the user in KR, ask mechanism
+    questions before explaining, and do not answer withheld challenges until the
+    user first attempts them.
+  grounding_rule: >
+    Minimize hallucination aggressively. If any factual, numerical, equation,
+    figure/table, citation, author, method, result, limitation, or terminology
+    detail is uncertain, ambiguous, or not already grounded in the supplied
+    review/README, first open the local PDF/fulltext path and verify it before
+    answering. Say "논문에서 확인해볼게" before checking. Distinguish verified
+    paper facts from inference or tutoring intuition. If the local main paper is
+    still insufficient, do not guess: inspect the relevant cited reference from
+    `report/<YYMMDD>/refs/` if already downloaded, or search/download/read the
+    reference directly using the normal IEEE/arXiv workflow before judging. If a
+    claim still cannot be verified from the main paper or references, say so
+    explicitly and leave it as unknown instead of filling the gap from memory.
