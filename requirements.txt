@@ -1,0 +1,7 @@
+# research-daily-digest dependencies
+# Note: the CDP path (connect_over_cdp) does NOT need `playwright install chromium`
+# — it attaches to the dedicated-profile Chrome/Edge already on your machine.
+playwright>=1.40
+pypdf>=4.0
+openpyxl>=3.1
+pyyaml>=6.0

@@ -1,0 +1,77 @@
+# ============================================================================
+#  research-daily-digest — 사용자 설정 템플릿
+#  ----------------------------------------------------------------------------
+#  사용법: 이 파일을 `config.yaml`로 복사한 뒤, 아래 값을 네 연구에 맞게 채워라.
+#          (cp config.example.yaml config.yaml)
+#  그게 전부다. 나머지(선별·다운로드·리뷰·리포트·Excel·학습루프)는 이 값을 읽어
+#  자동으로 너 기준으로 동작한다.
+#
+#  채워진 값은 "고주파 magnetics 석사" 예시다 — 네 분야로 바꿔라.
+# ============================================================================
+
+user:
+  name: "Your Name"
+  role: "MS student"          # MS / PhD / PostDoc / ...
+  institution: "KAIST"        # IEEE는 기관 네트워크(IP) 기반 접근 — 캠퍼스/연구실 망에서 실행하면 로그인 불필요
+
+research:
+  # 한 줄 분야 (리포트 머리말 등에 쓰임)
+  field: "High-frequency magnetics & power electronics"
+
+  # 관심 세부분야 — 우선순위 순서대로. 논문 선별·리뷰의 '내 분야와의 연관성'에 사용.
+  interests:
+    - "High-frequency magnetics (500 kHz – 13.56 MHz), HF magnetic material"
+    - "Coupled inductor (modeling / structure / optimization)"
+    - "PCB transformer, integrated magnetics"
+    - "Data-center PoL converter (48 V → 1 V VRM, vertical power delivery)"
+    - "PDN (power delivery network: impedance / I²R / EMI)"
+
+  # 우선적으로 따라 읽는 연구실/저자 — 선별 시 1순위로 가중.
+  reference_labs:
+    - "Minjie Chen (Princeton)"
+    - "David Perreault (MIT PERC)"
+    - "Charles Sullivan (Dartmouth)"
+    - "Qiang Li / Fred C. Lee (Virginia Tech CPES)"
+    - "KAIST IPC"
+
+  # IEEE Xplore 검색에 쓸 키워드(평문). 저자명 + 토픽을 섞으면 좋다.
+  search_keywords:
+    - "coupled inductor point-of-load"
+    - "PCB transformer 13.56 MHz"
+    - "high frequency magnetics core loss"
+    - "48V VRM vertical power delivery"
+    - "power delivery network impedance"
+
+report:
+  summary_languages: ["KR", "EN"]   # 분석 요약을 만들 언어들 (예: ["EN"] 또는 ["KR","EN"])
+  dialogue_language: "KR"           # 이해도 Q&A / 챌린지 대화 언어
+  refs_per_paper: "3-4"             # 메인 1편당 받을 핵심 reference 수
+  selection_priority: "reference_labs_first"  # reference_labs_first | recency_first | mixed
+  year_window:
+    prefer: 2026                    # 가장 선호하는 연도
+    min: 2023                       # 이 연도 이후만 (고전 명저 제외)
+  # 교육 철학(리포트가 사고력을 기르도록) — 보통 그대로 둔다.
+  pedagogy: >
+    Anti-over-reliance: build the reader's ability to ASK questions + give
+    challenges. Main paper detailed; references concise + questions. Answers to
+    challenges/self-checks are withheld (they become the next-day quiz).
+
+sources:
+  ieee: true        # IEEE Xplore (기관 네트워크에서 접근)
+  arxiv: true       # arXiv 등 오픈액세스 직접 다운로드 허용
+
+excel:
+  enabled: true
+  path: "Papers_Summary.xlsx"   # 프로젝트 루트 기준 상대경로 (없으면 자동 생성)
+  sheet: "Papers"               # 시트 이름 (네 기존 시트명으로)
+  # 칼럼은 헤더 텍스트로 자동 매핑된다. 표준 헤더:
+  #   # | Title | Author | Journal Name | Year | Short Summary | Cons of the paper | My lack | ABSTRACT | Insights
+
+paths:
+  project_root: "."   # report/, research_profile/, index.md, inbox/ 가 생길 위치
+
+browser:
+  remote_debugging_port: 9222
+  profile_dir: "~/cdp-profile"  # 전용 Chrome/Edge 프로필(로그인·쿠키 영속). OS별 경로 자동 확장.
+  # chrome/edge 실행파일은 OS별로 자동 탐지(Windows 우선). 필요시 아래로 직접 지정:
+  # executable: "C:/Program Files/Google/Chrome/Application/chrome.exe"
