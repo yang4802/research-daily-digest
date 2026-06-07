@@ -16,6 +16,10 @@ index.md
 # Dedicated browser profile
 cdp-profile/
 
+# Google Drive for desktop temp upload artifacts (never commit these)
+.tmp.driveupload/
+*.tmp.drivedownload/
+
 # OS
 .DS_Store
 Thumbs.db
